@@ -1,6 +1,13 @@
-function Form({handleSubmit,handleChange}) {
+
+import React, { useContext } from 'react';
+import { ListContext } from '../context/list';
+
+
+function Form() {
+  const { handleSubmit, handleChange } = useContext(ListContext);
+
   return (
-    <>
+    <div className="formContainer">
       <form onSubmit={handleSubmit}>
         <h2>Add To Do Item</h2>
 
@@ -40,7 +47,7 @@ function Form({handleSubmit,handleChange}) {
           <button type="submit">Add Item</button>
         </label>
       </form>
-    </>
+    </div>
   );
 }
 

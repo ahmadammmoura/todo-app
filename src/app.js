@@ -1,11 +1,12 @@
-import React from 'react';
-
+import ListContext from './context/list';
 import ToDo from './components/todo.js';
 
-export default class App extends React.Component {
-  render() {
+export default function App(){
+  
     return (
+    <ListContext>
       <ToDo />
+    </ListContext>
     );
-  }
+  
 }
