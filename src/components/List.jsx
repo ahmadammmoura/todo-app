@@ -1,17 +1,13 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { ListContext } from '../context/list';
+import { SettingContext } from '../context/settings';
 import './main.scss'
 function List() {
   const { list, toggleComplete } = useContext(ListContext);
-  const [start, setStart] = useState(0);
-  const [pages, setPages] = useState(3);
+  const { choose ,back,next,start,end ,number} = useContext(SettingContext);
   const [filter, setFilter] = useState([]);
 
-  function next(num) {
-    if (start + num < 0) return;
-    setStart(start + num);
-    setPages(pages + num);
-  }
+
 
   function onlyIncomplete() {
     if (filter == list)
@@ -23,8 +19,12 @@ function List() {
     setFilter(list);
   }, [list]);
 
-  const listOfTodos = filter.slice(start, pages).map((item) =>{
-    
+
+
+
+
+  const listOfTodos = filter.slice(start, end).map((item) =>{
+
     const deff = item.difficulty > 3 ? 'hard' : 'easy'
   return(
     <li key={item.id} ng-repeat="notebook in notebooks">
@@ -36,16 +36,23 @@ function List() {
     </li>
   )});
 
+
+
   return (
     <div className="listContainer">
       <button  onClick={onlyIncomplete}>
         only incomplete {filter == list ? 'off' : 'on'}
       </button>
+      <select name="select" onClick={choose}>
+        <option value="3">3</option>
+        <option value="6">6</option>
+        <option value="9">9</option>
+      </select>
       <ul >
       {listOfTodos}
       </ul>
-      <button  onClick={() => next(-3)}>back</button>
-      <button  onClick={() => next(3)}>next</button>
+      <button  onClick={() => back(number * -1)}>back</button>
+      <button  onClick={() => next(number,filter.length)}>next</button>
     </div>
   );
 }

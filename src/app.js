@@ -1,12 +1,27 @@
 import ListContext from './context/list';
 import ToDo from './components/todo.js';
-
-export default function App(){
-  
-    return (
-    <ListContext>
-      <ToDo />
-    </ListContext>
-    );
-  
+import Setting from './components/Setting';
+import  SettingContext  from './context/settings';
+import Navigation from './components/Nav';
+import { BrowserRouter, Route, Link, Switch } from 'react-router-dom';
+export default function App() {
+  return (
+    <BrowserRouter>
+      <Navigation />
+      <Switch>
+        <Route exact path="/">
+          <ListContext>
+            <SettingContext>
+              <ToDo />
+            </SettingContext>
+          </ListContext>
+        </Route>
+        <Route exact path="/setting">
+          <SettingContext>
+            <Setting />
+          </SettingContext>
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  );
 }
