@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 export const SettingContext = React.createContext();
 
 function Setting(props) {
@@ -6,7 +6,19 @@ function Setting(props) {
   const [number, setnumber] = useState(3)
   const [start, setStart] = useState(0);
   const [end, setEnd] = useState(3);
+  const [filter, setFilter] = useState([]);
 
+
+  useEffect(() => {
+    let number = localStorage.getItem('number')
+    let start = localStorage.getItem('start')
+    let end = localStorage.getItem('end')
+    if(number){
+      setnumber(Number(number))
+    setEnd(Number(end))
+    setStart(start)
+    }
+  }, [])
 
   function next(num,length) {
     
@@ -22,7 +34,7 @@ function Setting(props) {
     setStart(start + num);
     setEnd(end + num);
   }
-
+  
   // function handleFormSubmit(){
     
   //   const obj = {
@@ -39,9 +51,13 @@ function Setting(props) {
     setEnd(Number(e.target.value))
     setStart(0)
 
+    localStorage.setItem('number', Number(e.target.value));
+    localStorage.setItem('end', Number(e.target.value));
+    localStorage.setItem('start',0);
+
   }
 
-  return <SettingContext.Provider value={{ choose ,back,next,start,end,number}}>{props.children}</SettingContext.Provider>;
+  return <SettingContext.Provider value={{ choose ,back,next,start,end,number,filter,setFilter}}>{props.children}</SettingContext.Provider>;
 }
 
 export default Setting;

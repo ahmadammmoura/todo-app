@@ -1,21 +1,18 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { ListContext } from '../context/list';
 import { SettingContext } from '../context/settings';
-import { Callout, Button, Icon } from '@blueprintjs/core';
+import { Callout, Button} from '@blueprintjs/core';
 
 function List() {
   const { list, toggleComplete } = useContext(ListContext);
-  const { choose, back, next, start, end, number } = useContext(SettingContext);
-  const [filter, setFilter] = useState([]);
+  const { back, next, start, end, number,filter ,setFilter} = useContext(SettingContext);
 
-  function onlyIncomplete() {
-    if (filter == list)
-      setFilter(() => filter.filter((item) => item.complete != true));
-    else setFilter(list);
-  }
+
 
   useEffect(() => {
     setFilter(list);
+    
+
   }, [list]);
 
   const listOfTodos = filter.slice(start, end).map((item) => {
@@ -42,23 +39,7 @@ function List() {
   return (
     <>
       {' '}
-      <div style={{ width: '50%', marginLeft: '5rem', marginTop: '5rem' }}>
-        <Button
-          icon="confirm"
-          intent={filter !== list ? 'success' : 'danger'}
-          onClick={onlyIncomplete}
-          text={filter == list ? 'only incomplete off' : 'only incomplete on'}
-        />
-        <select
-          style={{ marginLeft: '2rem', width: '4rem' }}
-          name="select"
-          onClick={choose}
-        >
-          <option value="3">3</option>
-          <option value="6">6</option>
-          <option value="9">9</option>
-        </select>
-      </div>
+      
       <ul style={{ marginTop: '4rem' }}>{listOfTodos}</ul>
 
       <div style={{marginLeft:'25rem',padding:'3rem'}} >

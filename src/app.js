@@ -17,9 +17,11 @@ export default function App() {
           </ListContext>
         </Route>
         <Route exact path="/setting">
+        <ListContext>
           <SettingContext>
             <Setting />
           </SettingContext>
+          </ListContext>  
         </Route>
       </Switch>
     </BrowserRouter>

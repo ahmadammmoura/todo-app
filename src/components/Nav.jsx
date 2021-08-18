@@ -8,6 +8,7 @@ import {
   NavbarGroup,
   NavbarHeading,
 } from "@blueprintjs/core";
+import { Link } from "react-router-dom";
 
 
 function Navigation() {
@@ -17,8 +18,8 @@ function Navigation() {
         <NavbarGroup >
           <NavbarHeading>TODO APP...</NavbarHeading>
           <NavbarDivider />
-          <Button style={{color: Colors.BLUE3}} className={Classes.MINIMAL} icon="home" text="Home" />
-          <Button style={{color: Colors.BLUE3}} className={Classes.MINIMAL} icon="build" text="setting" />
+          <Link to='/'><Button style={{color: Colors.BLUE3}} className={Classes.MINIMAL} icon="home" text="Home"/></Link>
+          <Link to='/setting'><Button style={{color: Colors.BLUE3}} className={Classes.MINIMAL} icon="build" text="setting"/></Link>
         </NavbarGroup>
       </Navbar>
     </>
