@@ -1,70 +1,62 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { ListContext } from '../context/list';
-import './main.scss'
+import { SettingContext } from '../context/settings';
+import { Callout, Button} from '@blueprintjs/core';
+
 function List() {
   const { list, toggleComplete } = useContext(ListContext);
-  const [start, setStart] = useState(0);
-  const [pages, setPages] = useState(3);
-  const [filter, setFilter] = useState([]);
+  const { back, next, start, end, number,filter ,setFilter} = useContext(SettingContext);
 
-  function next(num) {
-    if (start + num < 0) return;
-    setStart(start + num);
-    setPages(pages + num);
-  }
 
-  function onlyIncomplete() {
-    if (filter == list)
-      setFilter(() => filter.filter((item) => item.complete != true));
-    else setFilter(list);
-  }
 
   useEffect(() => {
     setFilter(list);
+    
+
   }, [list]);
 
-  const listOfTodos = filter.slice(start, pages).map((item) =>{
-    
-    const deff = item.difficulty > 3 ? 'hard' : 'easy'
-  return(
-    <li key={item.id} ng-repeat="notebook in notebooks">
-      <p>todo: {item.text}</p>
-      <p>Assigned to: {item.assignee}</p>
-      <p>difficulty : {deff}</p>
+  const listOfTodos = filter.slice(start, end).map((item) => {
+    const deff = item.difficulty > 3 ? 'hard' : 'easy';
+    const itemComplete = item.complete === true ? 'success' : 'danger';
+    const color = deff === 'hard' ? 'red' : 'green';
 
-      <div class="right top" onClick={() => toggleComplete(item.id)}>{item.complete.toString()}</div>
-    </li>
-  )});
+    return (
+      <Callout key={item.id} style={{ marginBottom: '0.5rem', width: '80%',marginLeft:'5rem' }}>
+        <h5>todo: {item.text}</h5>
+        <p>Assigned to: {item.assignee}</p>
+        <p style={{ color: color }}>difficulty : {deff}</p>
+
+        <Button
+          icon="confirm"
+          intent={itemComplete}
+          onClick={() => toggleComplete(item.id)}
+          text={item.complete.toString()}
+        />
+      </Callout>
+    );
+  });
 
   return (
-    <div className="listContainer">
-      <button  onClick={onlyIncomplete}>
-        only incomplete {filter == list ? 'off' : 'on'}
-      </button>
-      <ul >
-      {listOfTodos}
-      </ul>
-      <button  onClick={() => next(-3)}>back</button>
-      <button  onClick={() => next(3)}>next</button>
-    </div>
+    <>
+      {' '}
+      
+      <ul style={{ marginTop: '4rem' }}>{listOfTodos}</ul>
+
+      <div style={{marginLeft:'25rem',padding:'3rem'}} >
+        <Button
+          style={{margin:'1rem'}}
+          icon="arrow-left"
+          onClick={() => back(number * -1)}
+          text={'back'}
+        />
+        <Button
+          icon="arrow-right"
+          onClick={() => next(number, filter.length)}
+          text={'next'}
+        />
+      </div>
+    </>
   );
 }
 
 export default List;
-
-
-
-
-// <div key={item.id}>
-//     //   <p>{item.text}</p>
-//     //   <p>
-//     //     <small>Assigned to: {item.assignee}</small>
-//     //   </p>
-//     //   <p>
-//     //     <small>Difficulty: {item.difficulty}</small>
-//     //   </p>
-//     //   <div onClick={() => toggleComplete(item.id)}>
-//     //     Complete: {item.complete.toString()}
-//     //   </div>
-//     //   <hr />
-//     // </div>

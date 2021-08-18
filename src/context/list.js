@@ -6,12 +6,13 @@ function list(props) {
   const [list, setList] = useState([]);
   const [values, setValues] = useState({});
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     if (event) event.preventDefault();
     values.id = uuid();
     values.complete = false;
     setList([...list, values]);
-
+   await console.log(list)
+    // localStorage.setItem('list', JSON.stringify(list));
   }
 
   function handleChange(event) {
