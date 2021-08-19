@@ -50,7 +50,7 @@ function LogIn() {
                   placeholder="password"
                 />
                 <label for="role">Choose a role:</label>
-                <select onClick={handeleChange} style={{width:'10rem',marginBottom:'15px'}} name="role" id="role">
+                <select onClick={handeleChange} style={{width:'10rem',marginBottom:'14px'}} name="role" id="role">
                   <option value="admin">Admin</option>
                   <option value="user">User</option>
                 </select>
