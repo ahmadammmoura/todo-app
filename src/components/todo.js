@@ -3,9 +3,12 @@ import Header from './Headers';
 import Form from './Form';
 import List from './List';
 import { ListContext } from '../context/list';
+import { AuthContext } from '../context/auth';
+import Auth from '../components/Auth';
 
 const ToDo = () => {
   const listObject = useContext(ListContext);
+  const {isLoggenIn,username} = useContext(AuthContext);
   const [incomplete, setIncomplete] = useState([]);
 
   function deleteItem(id) {
@@ -18,14 +21,16 @@ const ToDo = () => {
     setIncomplete(incompleteCount);
     document.title = `To Do List: ${incomplete}`;
   }, [listObject.list]);
-
-  return (
-    <div style={{width:'%100'}}>
-      <Header incomplete={incomplete} />
-      <Form />
-      <List />
-    </div>
-  );
+ 
+  return (<>
+      {isLoggenIn && <div style={{width:'%100'}}>
+        <Header incomplete={incomplete} />
+        <Auth capability='create'>
+          <Form />
+        </Auth>
+        <List />
+      </div>}
+  </>);
 };
 
 export default ToDo;
