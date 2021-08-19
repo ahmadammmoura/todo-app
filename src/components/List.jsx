@@ -11,8 +11,6 @@ function List() {
 
   useEffect(() => {
     setFilter(list);
-    
-
   }, [list]);
 
   const listOfTodos = filter.slice(start, end).map((item) => {

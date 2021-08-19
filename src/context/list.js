@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 export const ListContext = React.createContext();
 import { v4 as uuid } from 'uuid';
 
 function list(props) {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState(JSON.parse(localStorage.getItem('list')));
   const [values, setValues] = useState({});
+
+  useEffect(()=>{
+    localStorage.setItem('list', JSON.stringify(list));
+  },[list])
 
   async function handleSubmit(event) {
     if (event) event.preventDefault();
     values.id = uuid();
     values.complete = false;
     setList([...list, values]);
-   await console.log(list)
-    // localStorage.setItem('list', JSON.stringify(list));
   }
 
   function handleChange(event) {

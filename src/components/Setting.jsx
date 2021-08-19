@@ -2,15 +2,14 @@ import React,{useContext,useEffect} from 'react'
 import {Button } from '@blueprintjs/core';
 import { SettingContext } from '../context/settings';
 import { ListContext } from '../context/list';
+import {AuthContext} from '../context/auth'
+
 function Setting() {
 
   const { choose,filter,setFilter } = useContext(SettingContext);
   const  {list}  = useContext(ListContext);
+  const {isLoggenIn} = useContext(AuthContext);
 
-
-  useEffect(()=>{
-    
-  },[])
   function onlyIncomplete() {
     console.log(filter,list)
     if (filter.length == list.length){
@@ -19,7 +18,7 @@ function Setting() {
   }
   return (
     <>
-      <div style={{ width: '50%', marginLeft: '5rem', marginTop: '5rem' }}>
+      {isLoggenIn && <div style={{ width: '50%', marginLeft: '5rem', marginTop: '5rem' }}>
         <Button
           icon="confirm"
           intent={filter !== list ? 'success' : 'danger'}
@@ -35,7 +34,7 @@ function Setting() {
           <option value="6">6</option>
           <option value="9">9</option>
         </select>
-      </div>
+      </div>}
     </>
   )
 }
